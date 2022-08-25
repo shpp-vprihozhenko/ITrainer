@@ -1043,7 +1043,7 @@ class EngDialogs {
 		lst.add("But what about the X-ray?");
 		lst.add("Is anything wrong?");
 		lst.add("The X-ray shows emphysema. ");
-		lst.add("That's evidently  the result of your heavy smoking. ");
+		lst.add("That's evidently the result of your heavy smoking. ");
 		lst.add("Your breath shortness and your cough are probably caused by the emphysema");
 		lst.add("Is that serious?");
 		lst.add("It could become extremely serious. ");
@@ -1204,8 +1204,8 @@ class EngDialogs {
 		lst.add("What time do you prefer?");
 		lst.add("As far as I know, there is a train that leaves for Boston at 9 AM. ");
 		lst.add("I'd like to go by that train");
-		lst.add("Do you prefer a smoking car or a car for nonsmokers?");
-		lst.add("A smoking car, please");
+		lst.add("Do you prefer a smoking car or a car for non-smokers?");
+		lst.add("A non-smoking car, please");
 		lst.add("I'll reserve for you two tickets for the nine o'clock Sunday train");
 		lst.add("Roundtrip tickets?");
 		lst.add("Yes");
@@ -1316,7 +1316,7 @@ class EngDialogs {
 		lst.add("Come with me, please");
 		lst.add("Could we have the menu?");
 		lst.add("Certainly");
-		lst.add("waiter brings the menu and a wine list");
+		lst.add("waiter brings the menu");
 		lst.add("We have to make up our mind. ");
 		lst.add("We'll order in a few minutes");
 		lst.add("Do you want an appetizer, Vera? ");
@@ -1347,7 +1347,7 @@ class EngDialogs {
 		lst.add("The vegetable of this day is asparagus");
 		lst.add("It's all right with me. What about you, Vera?");
 		lst.add("It's okay");
-		lst.add("Would you like to see the wine list?");
+		lst.add("Would you like to see the menu?");
 		lst.add("We'd like a carafe of Chablis");
 		lst.add("Fine. Will you order your dessert now? ");
 		lst.add("Can we order it later?");

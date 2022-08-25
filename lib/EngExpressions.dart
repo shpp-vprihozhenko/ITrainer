@@ -428,7 +428,7 @@ class EngExpressions {
 		lst.add("For how many nights?");
 		lst.add("How long will you be staying?");
 		lst.add("I'd like a map of the city.");
-		lst.add("I'd like a non-smoking room.");
+		lst.add("I'd like a fresh newspaper.");
 		lst.add("I'd like a room.");
 		lst.add("I'd like a room with two beds please.");
 		lst.add("I need a doctor.");
@@ -496,7 +496,7 @@ class EngExpressions {
 		lst.add("Would you like coffee or tea?");
 		lst.add("Would you like something to drink?");
 		lst.add("Would you like some water?");
-		lst.add("Would you like some wine?");
+		lst.add("Would you like some juice?");
 		lst.add("Would you like to go for a walk?");
 		lst.add("Would you like to watch TV?");
 		lst.add("Are you American?");
@@ -651,7 +651,7 @@ class EngExpressions {
 		lst.add("Don't do that.");
 		lst.add("Do you believe that?");
 		lst.add("Do you have a pencil?");
-		lst.add("Do you smoke?");
+		lst.add("Do you want a cup of tea?");
 		lst.add("Do you speak English?");
 		lst.add("Excuse me, what did you say?");
 		lst.add("Forget it.");

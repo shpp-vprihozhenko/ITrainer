@@ -189,7 +189,9 @@ class _MyHomePageState extends State<MyHomePage> {
     Navigator.push(
       context,
       MaterialPageRoute(builder: (context) => MyEnglishPage()),
-    );
+    ).then((v){
+      print('go back from eng with $v');
+    });
     _speakSync('Когда будешь готов - нажми Старт!');
   }
 
@@ -206,7 +208,7 @@ class _MyHomePageState extends State<MyHomePage> {
       context: context,
       //applicationIcon: Text('Here must be Logo'),
       applicationName: 'Интерактивный тренажёр',
-      applicationVersion: 'Версия 0.0.2',
+      applicationVersion: 'Версия 1.0.2',
       applicationLegalese: '©2020 Владимир Прихоженкo',
       children: <Widget>[
         Padding(

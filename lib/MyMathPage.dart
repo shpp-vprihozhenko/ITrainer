@@ -28,7 +28,7 @@ class _MyMathPage extends State<MyMathPage> {
   bool dynamicDifficult = false;
   String curDoing = '+-';
   String _curTaskMsg = 'Сколько будет 2 + 2 ?', _curTaskMsgTxt = '';
-  int expectedRes = 0;
+  int expectedRes = 0, lastA = -1, lastB = -1;
   int numOkAnswer = 0, numWrongAnswer = 0, numTotalAnswer = 0;
   int numOkLast5 = 0;
   bool showMic = false;
@@ -158,6 +158,10 @@ class _MyMathPage extends State<MyMathPage> {
   void initSTT() async {
     bool hasSpeech = await speech.initialize(
         onError: errorListener, onStatus: statusListener);
+
+    speech.errorListener = errorListener;
+    speech.statusListener = statusListener;
+
     print('initSpeechState hasSpeech $hasSpeech');
 
     if (hasSpeech) {
@@ -224,16 +228,8 @@ class _MyMathPage extends State<MyMathPage> {
             ),
           ),
           Expanded(
-            child: BlinkWidget(
-              children: <Widget>[
-                Icon(
-                  Icons.mic,
-                  size: 40,
-                  color: showMic ? Colors.green : Colors.transparent,
-                ),
-                Icon(Icons.mic, size: 40, color: Colors.transparent),
-              ],
-            ),
+              child: showMic? Center(child: Image.asset('assets/images/animMicroph.gif', width: 40, height: 40)) : SizedBox(height: 40,)
+            //child: BlinkWidget(children: <Widget>[Icon(Icons.mic,size: 40,color: showMic ? Colors.green : Colors.transparent,),Icon(Icons.mic, size: 40, color: Colors.transparent),],),
           ),
           Expanded(
             child: Center(
@@ -403,9 +399,9 @@ class _MyMathPage extends State<MyMathPage> {
 
   _formCurTask(int startTask, int finTask) {
     var rng = new Random();
-    int nA = rng.nextInt(maxNum);
-    int nB = rng.nextInt(maxNum);
-    int nRes = rng.nextInt(maxNum);
+    int nA = rng.nextInt(maxNum+1);
+    int nB = rng.nextInt(maxNum+1);
+    int nRes = rng.nextInt(maxNum+1);
 
     int actionInt = startTask;
     if (finTask > startTask) {
@@ -417,22 +413,19 @@ class _MyMathPage extends State<MyMathPage> {
     if (actionInt == 1) {
       actionTxt = 'плюс';
       action = '+';
-      if (nA > nRes) {
-        int n = nA;
-        nRes = nA;
-        nA = n;
+      while (nA+nB > maxNum || nA == lastA || nB == lastB) {
+        nA = rng.nextInt(maxNum+1);
+        nB = rng.nextInt(maxNum+1);
       }
-      nB = nRes - nA;
+      nRes = nA + nB;
     } else if (actionInt == 2) {
       actionTxt = 'минус';
       action = '-';
-      if (nA > nB) {
-        nRes = nA - nB;
-      } else {
-        nRes = nB - nA;
-        nA = nB;
-        nB = nA - nRes;
+      while (nA-nB < 0 || nA == lastA || nB == lastB) {
+        nA = rng.nextInt(maxNum+1);
+        nB = rng.nextInt(maxNum+1);
       }
+      nRes = nA - nB;
     } else if (actionInt == 3) {
       actionTxt = 'умножить на';
       action = '*';
@@ -631,7 +624,7 @@ class _MyMathPage extends State<MyMathPage> {
           'Сколько будет ${itp.intToPropis(nA)} разделить на ${itp.intToPropis(nB)}?';
     }
 
-    expectedRes = nRes;
+    expectedRes = nRes; lastA = nA; lastB = nB;
 
     if (actionInt <= 4) {
       setState(() {
@@ -824,8 +817,11 @@ class _MyMathPage extends State<MyMathPage> {
     showDialog(
       context: context,
       builder: (BuildContext context) => new CupertinoAlertDialog(
-        title: new Text("Я тебя не понял..."),
-        content: new Text("Повторим?", textScaleFactor: 1.5,),
+        title: Text("Я тебя не понял...", textScaleFactor: 1.3,),
+        content: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Text("Повторим?", textScaleFactor: 1.6,),
+        ),
         actions: [
           FlatButton(
               child: Text('Да'),
@@ -891,6 +887,7 @@ class _MyMathPage extends State<MyMathPage> {
   }
 }
 
+/*
 class BlinkWidget extends StatefulWidget {
   final List<Widget> children;
   final int interval;
@@ -911,7 +908,7 @@ class _BlinkWidgetState extends State<BlinkWidget>
     super.initState();
 
     _controller = new AnimationController(
-        duration: Duration(milliseconds: widget.interval), vsync: this);
+        duration: Duration(milliseconds: widget.interval));
 
     _controller.addStatusListener((status) {
       if (status == AnimationStatus.completed) {
@@ -940,6 +937,7 @@ class _BlinkWidgetState extends State<BlinkWidget>
     );
   }
 }
+*/
 
 class TaskType {
   String id;

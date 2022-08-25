@@ -107,6 +107,10 @@ class _MyEnglishPage extends State<MyEnglishPage> {
   void initSTT() async {
     bool hasSpeech = await speech.initialize(
         onError: errorListener, onStatus: statusListener);
+
+    speech.errorListener = errorListener;
+    speech.statusListener = statusListener;
+
     print('initSpeechState hasSpeech $hasSpeech');
 
     if (hasSpeech) {
@@ -124,7 +128,7 @@ class _MyEnglishPage extends State<MyEnglishPage> {
   }
 
   void errorListener(SpeechRecognitionError error) {
-    print("Received error status: $error, listening: ${speech.isListening}");
+    print("Received Eng error status: $error, listening: ${speech.isListening}");
     setState(() {
       showMic = false;
     });
@@ -152,8 +156,11 @@ class _MyEnglishPage extends State<MyEnglishPage> {
     showDialog(
       context: context,
       builder: (BuildContext context) => new CupertinoAlertDialog(
-        title: new Text("Я тебя не понял..."),
-        content: new Text("Повторим?"),
+        title: Text("Я тебя не понял...", textScaleFactor: 1.3,),
+        content: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Text("Повторим?", textScaleFactor: 1.6),
+        ),
         actions: [
           FlatButton(
               child: Text('Да'),
@@ -185,18 +192,10 @@ class _MyEnglishPage extends State<MyEnglishPage> {
                       )
                     : ListView(
                         children: ewTaskList(),
-                      )),
-            Expanded(
-              child: BlinkWidget(
-                children: <Widget>[
-                  Icon(
-                    Icons.mic,
-                    size: 40,
-                    color: showMic ? Colors.green : Colors.transparent,
-                  ),
-                  Icon(Icons.mic, size: 40, color: Colors.transparent),
-                ],
-              ),
+                      )
+            ),
+            Expanded( //BlinkingIcons(showMic: showMic),
+              child: showMic? blinkMicrophoneW() : SizedBox(height: 40,)
             ),
             Expanded(
               child: Row(
@@ -261,6 +260,17 @@ class _MyEnglishPage extends State<MyEnglishPage> {
             )
           ],
         ));
+  }
+
+  Widget blinkMicrophoneW() {
+    return InkWell(
+        splashColor: Colors.white,
+        onTap: () {
+          print('run startListening');
+          startListening();
+        }, // handle your onTap here
+        child: Center(child: Image.asset('assets/images/animMicroph.gif', width: 40, height: 40))
+    );
   }
 
   List<Widget> ewTaskList() {
@@ -414,7 +424,7 @@ class _MyEnglishPage extends State<MyEnglishPage> {
         curRusText = myRusExpressions[curPos];
       } else if (_selectedEngTaskKind.name == 'Диалоги') {
         curEngText = myEngDialogs[curPos];
-        curRusText = myEngDialogs[curPos];
+        curRusText = myRusDialogs[curPos];
       }
     });
     await _speakSync(curEngText);
@@ -529,6 +539,31 @@ class EnglishTask {
   }
 }
 
+/*
+
+class BlinkingIcons extends StatelessWidget {
+  const BlinkingIcons({
+    Key key,
+    @required this.showMic,
+  }) : super(key: key);
+
+  final bool showMic;
+
+  @override
+  Widget build(BuildContext context) {
+    return BlinkWidget(
+      children: <Widget>[
+        Icon(
+          Icons.mic,
+          size: 40,
+          color: showMic ? Colors.green : Colors.transparent,
+        ),
+        Icon(Icons.mic, size: 40, color: Colors.transparent),
+      ],
+    );
+  }
+}
+
 class BlinkWidget extends StatefulWidget {
   final List<Widget> children;
   final int interval;
@@ -549,7 +584,7 @@ class _BlinkWidgetState extends State<BlinkWidget>
     super.initState();
 
     _controller = new AnimationController(
-        duration: Duration(milliseconds: widget.interval), vsync: this);
+        duration: Duration(milliseconds: widget.interval)); //, vsync: this
 
     _controller.addStatusListener((status) {
       if (status == AnimationStatus.completed) {
@@ -578,3 +613,4 @@ class _BlinkWidgetState extends State<BlinkWidget>
     );
   }
 }
+*/
